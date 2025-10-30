@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Post‑Ṣalāh Adhkār (Hanafi)</title>
-  <meta name="description" content="Phone-friendly offline checklist of post‑ṣalāh adhkār (Hanafi) with Arabic and transliteration, tap-to-count, and local save.">
+  <title>Post-Ṣalāh Adhkār (Hanafi)</title>
+  <meta name="description" content="Phone-friendly offline checklist of post-ṣalāh adhkār (Hanafi) with Arabic and transliteration, tap-to-count, and local save.">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#0a0a0a">
   <!-- iOS PWA meta -->
@@ -33,7 +33,7 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-    .container { max-width: 920px; margin: 0 auto; padding: 16px 16px calc(16px + env(safe-area-inset-bottom)); }
+    .container { max-width: 920px; margin: 0 auto; padding: calc(16px + env(safe-area-inset-top) + 8px) 16px calc(20px + env(safe-area-inset-bottom)); }
     header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     h1 { margin: 0; font-size: 20px; }
     .tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 12px 0 8px; }
@@ -67,7 +67,7 @@
 <body>
   <div class="container">
     <header>
-      <h1>Post‑Ṣalāh Adhkār (Hanafi)</h1>
+      <h1>Post-Ṣalāh Adhkār (Hanafi)</h1>
       <div class="toolbar">
         <button id="resetAll" class="btn small" title="Reset all counters">Reset</button>
         <button id="installBtn" class="btn small hidden">Install</button>
@@ -99,55 +99,53 @@
     // --- Data model ---
     const BASE_A = [
       { key: "astaghfirullah", label: "Astaghfirullāh", ar: "أستغفرُ اللهَ", type: "ticks", times: 3 },
-      { key: "tasleem", label: "Allāhumma anta as‑salām wa minka as‑salām, tabārakta yā dha‑l‑jalāli wa‑l‑ikrām.", ar: "اللهم أنت السلام ومنك السلام، تباركتَ يا ذا الجلال والإكرام.", type: "ticks", times: 1 },
-      { key: "kursi", label: "Āyat al‑Kursī", ar: "آية الكرسي", type: "ticks", times: 1 },
-      { key: "quls", label: "Three Quls — al‑Ikhlāṣ • al‑Falaq • an‑Nās", ar: "الإخلاص • الفلق • الناس", type: "ticks", times: 1 },
+      { key: "tasleem", label: "Allāhumma anta as-salām wa minka as-salām, tabārakta yā dha-l-jalāli wa-l-ikrām.", ar: "اللهم أنت السلام ومنك السلام، تباركتَ يا ذا الجلال والإكرام.", type: "ticks", times: 1 },
+      { key: "kursi", label: "Āyat al-Kursī", ar: "آية الكرسي", type: "ticks", times: 1 },
+      { key: "quls", label: "Three Quls — al-Ikhlāṣ • al-Falaq • an-Nās", ar: "الإخلاص • الفلق • الناس", type: "ticks", times: 1 },
     ];
     const TASBIH = [
       { key: "subhan", label: "Subḥānallāh (33)", ar: "سُبحانَ الله", type: "count", target: 33 },
       { key: "alhamd", label: "Alḥamdulillāh (33)", ar: "الحمدُ لله", type: "count", target: 33 },
       { key: "akbar", label: "Allāhu Akbar (34)", ar: "اللهُ أكبر", type: "count", target: 34 },
-      { key: "tahleel100", label: "Complete 100: Lā ilāha illa‑llāhu waḥdahu lā sharīka lah, lahu‑l‑mulku wa lahu‑l‑ḥamdu wa huwa ʿalā kulli shay’in qadīr.", ar: "لا إلهَ إلا اللهُ وحدَه لا شريكَ له، لهُ الملكُ ولهُ الحمدُ وهو على كلِّ شيءٍ قدير.", type: "ticks", times: 1 },
+      { key: "tahleel100", label: "Complete 100: Lā ilāha illa-llāhu waḥdahu lā sharīka lah, lahu-l-mulku wa lahu-l-ḥamdu wa huwa ʿalā kulli shay’in qadīr.", ar: "لا إلهَ إلا اللهُ وحدَه لا شريكَ له، لهُ الملكُ ولهُ الحمدُ وهو على كلِّ شيءٍ قدير.", type: "ticks", times: 1 },
     ];
     const BENEFICIAL = [
       { key: "salawat", label: "Allāhumma ṣalli ʿalā Muḥammad, wa ʿalā āli Muḥammad.", ar: "اللهم صلِّ على محمد، وعلى آلِ محمد.", type: "ticks", times: 1 },
       { key: "lahawla", label: "Lā ḥawla wa lā quwwata illā billāh.", ar: "لا حولَ ولا قوةَ إلا بالله.", type: "ticks", times: 1 },
-      { key: "general", label: "Subḥānallāh / Alḥamdulillāh / Allāhu Akbar / Lā ilāha illa‑llāh.", ar: "سُبحانَ الله / الحمدُ لله / اللهُ أكبر / لا إلهَ إلا الله", type: "ticks", times: 1 },
+      { key: "general", label: "Subḥānallāh / Alḥamdulillāh / Allāhu Akbar / Lā ilāha illa-llāh.", ar: "سُبحانَ الله / الحمدُ لله / اللهُ أكبر / لا إلهَ إلا الله", type: "ticks", times: 1 },
     ];
     const EXTRAS = {
       fajr: [
         { key: "quls3", label: "Three Quls ×3", ar: "الإخلاص، الفلق، الناس ثلاث مرات", type: "ticks", times: 3 },
-        { key: "tahleel10", label: "Lā ilāha illa‑llāhu waḥdahu lā sharīka lah… ×10", ar: "لا إلهَ إلا اللهُ وحدَه لا شريكَ له، لهُ الملكُ ولهُ الحمدُ وهو على كلِّ شيءٍ قدير.", type: "ticks", times: 10 },
-        { key: "tamamat", label: "Aʿūdhu bi kalimāti‑llāhi‑t‑tāmmāti min sharri mā khalaq.", ar: "أعوذُ بكلماتِ اللهِ التامَّاتِ من شرِّ ما خلق.", type: "ticks", times: 1 },
+        { key: "tahleel10", label: "Lā ilāha illa-llāhu waḥdahu lā sharīka lah… ×10", ar: "لا إلهَ إلا اللهُ وحدَه لا شريكَ له، لهُ الملكُ ولهُ الحمدُ وهو على كلِّ شيءٍ قدير.", type: "ticks", times: 10 },
+        { key: "tamamat", label: "Aʿūdhu bi kalimāti-llāhi-t-tāmmāti min sharri mā khalaq.", ar: "أعوذُ بكلماتِ اللهِ التامَّاتِ من شرِّ ما خلق.", type: "ticks", times: 1 },
         { key: "ilmRizq", label: "Allāhumma innī as’aluka ʿilman nāfiʿan, wa rizqan ṭayyiban, wa ʿamalan mutaqabbalan.", ar: "اللهم إني أسألك علمًا نافعًا، ورزقًا طيبًا، وعملاً متقبَّلًا.", type: "ticks", times: 1 },
-        { key: "ajirni7", label: "Allāhumma ajirnī mina‑n‑nār ×7", ar: "اللهم أجرني من النار.", type: "ticks", times: 7 },
+        { key: "ajirni7", label: "Allāhumma ajirnī mina-n-nār ×7", ar: "اللهم أجرني من النار.", type: "ticks", times: 7 },
         { key: "subhan100", label: "Subḥānallāhi wa bi ḥamdih ×100 (across morning)", ar: "سُبحانَ اللهِ وبحمدِه.", type: "count", target: 100 },
       ],
       dhuhr: [],
       asr: [
-        { key: "tamamatE", label: "Aʿūdhu bi kalimāti‑llāhi‑t‑tāmmāti min sharri mā khalaq.", ar: "أعوذُ بكلماتِ اللهِ التامَّاتِ من شرِّ ما خلق.", type: "ticks", times: 1 },
-        { key: "ajirni7E", label: "Allāhumma ajirnī mina‑n‑nār ×7", ar: "اللهم أجرني من النار.", type: "ticks", times: 7 },
+        { key: "tamamatE", label: "Aʿūdhu bi kalimāti-llāhi-t-tāmmāti min sharri mā khalaq.", ar: "أعوذُ بكلماتِ اللهِ التامَّاتِ من شرِّ ما خلق.", type: "ticks", times: 1 },
+        { key: "ajirni7E", label: "Allāhumma ajirnī mina-n-nār ×7", ar: "اللهم أجرني من النار.", type: "ticks", times: 7 },
         { key: "tasdiq", label: "Āmannā billāhi waḥdah.", ar: "آمَنَّا بِاللَّهِ وَحْدَهُ.", type: "ticks", times: 1 },
       ],
       maghrib: [
         { key: "quls3M", label: "Three Quls ×3", ar: "الإخلاص، الفلق، الناس ثلاث مرات", type: "ticks", times: 3 },
-        { key: "tahleel10M", label: "Lā ilāha illa‑llāhu waḥdahu lā sharīka lah… ×10", ar: "لا إلهَ إلا اللهُ وحدَه لا شريكَ له، لهُ الملكُ ولهُ الحمدُ وهو على كلِّ شيءٍ قدير.", type: "ticks", times: 10 },
-        { key: "waqiah", label: "Sūrat al‑Wāqiʿah (virtuous practice)", ar: "سورة الواقعة", type: "ticks", times: 1 },
+        { key: "tahleel10M", label: "Lā ilāha illa-llāhu waḥdahu lā sharīka lah… ×10", ar: "لا إلهَ إلا اللهُ وحدَه لا شريكَ له، لهُ الملكُ ولهُ الحمدُ وهو على كلِّ شيءٍ قدير.", type: "ticks", times: 10 },
+        { key: "waqiah", label: "Sūrat al-Wāqiʿah (virtuous practice)", ar: "سورة الواقعة", type: "ticks", times: 1 },
       ],
       isha: [
-        { key: "akhirBaqarah", label: "Ākhir al‑Baqarah (2:285–286)", ar: "آمَنَ الرَّسُولُ … إلى آخر السورة", type: "ticks", times: 1 },
-        { key: "kursiSleep", label: "Āyat al‑Kursī (before sleep)", ar: "آية الكرسي", type: "ticks", times: 1 },
-        { key: "mulk", label: "Sūrat al‑Mulk", ar: "سورة الملك", type: "ticks", times: 1 },
+        { key: "akhirBaqarah", label: "Ākhir al-Baqarah (2:285–286)", ar: "آمَنَ الرَّسُولُ … إلى آخر السورة", type: "ticks", times: 1 },
+        { key: "kursiSleep", label: "Āyat al-Kursī (before sleep)", ar: "آية الكرسي", type: "ticks", times: 1 },
+        { key: "mulk", label: "Sūrat al-Mulk", ar: "سورة الملك", type: "ticks", times: 1 },
       ]
     };
 
-    // quls times default
     const QULS_TIMES = { fajr: 3, maghrib: 3, default: 1 };
 
     // --- State persistence ---
     const KEY = "adhkar-v1";
     const state = JSON.parse(localStorage.getItem(KEY) || "{}");
-
     function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
 
     // --- UI helpers ---
@@ -155,9 +153,12 @@
       const el = document.createElement(tag);
       Object.entries(attrs).forEach(([k,v]) => {
         if (k === "class") el.className = v;
-        else if (k.startsWith("on") && typeof v === "function") el.addEventListener(k.slice(2), v);
-        else if (k === "aria-hidden") el.setAttribute("aria-hidden", v);
-        else if (k === "aria-selected") el.setAttribute("aria-selected", v);
+        else if (k.startsWith("on") && typeof v === "function") {
+          const evt = k.slice(2).toLowerCase();
+          el.addEventListener(evt, v, false);
+        }
+        else if (k === "aria-hidden") el.setAttribute("aria-hidden", String(v));
+        else if (k === "aria-selected") el.setAttribute("aria-selected", String(v));
         else el.setAttribute(k, v);
       });
       children.forEach(c => { if (c!=null) el.appendChild(typeof c==="string" ? document.createTextNode(c) : c); });
@@ -167,7 +168,6 @@
     function ticksRow(salah, item) {
       const saved = (state[salah]?.[item.key] ?? 0);
       const total = item.times;
-      const buttons = [];
       const row = mkEl("div", { class: "card" },
         mkEl("div", { class: "row" },
           mkEl("div", {},
@@ -175,9 +175,7 @@
             mkEl("div", { class: "arabic" }, item.ar),
             mkEl("div", { class: "muted" }, `Target: ${total}`),
           ),
-          mkEl("div", { class: "grid three", style: "width: 180px;" },
-            // We'll render N small toggle buttons
-          )
+          mkEl("div", { class: "grid three", style: "width: 180px;" })
         ),
         mkEl("div", { class: "row", style: "margin-top:8px" },
           mkEl("button", { class: "btn small", onClick: () => set(0) }, "Reset"),
@@ -192,7 +190,7 @@
           const on = i < n;
           const b = mkEl("button", { class: "btn small", onClick: () => toggle(i) }, on ? "✓" : `${i+1}×`);
           if (on) b.style.background = "linear-gradient(0deg,#1f4,#1f4)";
-          buttons.push(b); grid.appendChild(b);
+          grid.appendChild(b);
         }
       }
       function set(n) {
@@ -263,21 +261,21 @@
       const aItems = BASE_A.map(i => (i.key === "quls" ? { ...i, times: (key in QULS_TIMES? QULS_TIMES[key] : QULS_TIMES.default) } : i));
       aItems.forEach(i => panel.appendChild(ticksRow(key, i)));
 
-      panel.appendChild(sectionTitle("Tasbīḥ Fāṭimah", "Use tap‑to‑count"));
+      panel.appendChild(sectionTitle("Tasbīḥ Fāṭimah", "Use tap-to-count"));
       TASBIH.forEach(i => {
         if (i.type === "count") panel.appendChild(countRow(key, i));
         else panel.appendChild(ticksRow(key, i));
       });
 
       if (EXTRAS[key] && EXTRAS[key].length) {
-        panel.appendChild(sectionTitle("Time‑specific extras", "Beneficial (fadā’il)"));
+        panel.appendChild(sectionTitle("Time-specific extras", "Beneficial (fadā’il)"));
         EXTRAS[key].forEach(i => {
           if (i.type === "count") panel.appendChild(countRow(key, i));
           else panel.appendChild(ticksRow(key, i));
         });
       }
 
-      panel.appendChild(sectionTitle("Beneficial add‑ons (B)"));
+      panel.appendChild(sectionTitle("Beneficial add-ons (B)"));
       BENEFICIAL.forEach(i => panel.appendChild(ticksRow(key, i)));
     }
 
