@@ -9,7 +9,7 @@ A minimal Progressive Web App (PWA) that runs offline and saves your tap-to-coun
 How to install on iPhone
 ----------------------------------
 1) Open the site (https://lytwurkcodes.github.io/SalahAdkhar) in Safari.
-2) Tap the **Share** icon.
+2) Tap the **Share** icon (usually at the bottom of the screen, underneath the URL. Icon is a box with an arrow pointing upwards).
 3) Choose **Add to Home Screen** → **Add**.
 4) Launch from the Home Screen icon. It will open full-screen and work offline. Counts are saved on-device.
 
