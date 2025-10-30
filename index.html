@@ -74,15 +74,10 @@
 .title { display:block; }
 
   
-.btn, button { -webkit-tap-highlight-color: rgba(255,255,255,0.1); touch-action: manipulation; }
-@keyframes tapPulse { 
-  0% { transform: scale(1); } 
-  50% { transform: scale(0.97); } 
-  100% { transform: scale(1); } 
-}
-.btn.haptic-tap.tapped { animation: tapPulse 120ms ease; }
-
-  </style>
+  .btn, button { -webkit-tap-highlight-color: rgba(255,255,255,0.1); touch-action: manipulation; }
+  @keyframes tapPulse { 0%{transform:scale(1)} 50%{transform:scale(0.97)} 100%{transform:scale(1)} }
+  .btn.haptic-tap.tapped { animation: tapPulse 120ms ease; }
+</style>
 </head>
 <body>
   <div class="container">
@@ -183,7 +178,8 @@
         else el.setAttribute(k, v);
       });
       children.forEach(c => { if (c!=null) el.appendChild(typeof c==="string" ? document.createTextNode(c) : c); });
-      return el;
+      if (tag.toLowerCase() === 'button') el.classList.add('haptic-tap');
+  return el;
     }
 
     function ticksRow(salah, item) {
@@ -352,15 +348,30 @@
       });
     }
   
-
 // --- Haptic-like tap feedback (visual; vibrate where allowed) ---
 function tapFeedback(el) {
+  // Visual micro-tap
   el.classList.add('tapped');
-  setTimeout(() => el.classList.remove('tapped'), 140);
-  if (navigator.vibrate) { try { navigator.vibrate(10); } catch (e) {} }
-}
+  setTimeout(() => el.classList.remove('tapped'), 110);
+  // Optional vibration where supported (Android); iOS ignores gracefully
+  if (navigator.vibrate) {
+    try { navigator.vibrate(10); } catch (e) {}
   }
 }
+
+
+// Delegated haptic-like feedback for all buttons with .haptic-tap
+(function(){
+  function should(el){ return el && el.classList && el.classList.contains('haptic-tap'); }
+  document.addEventListener('touchstart', function(e){
+    const el = e.target.closest('button');
+    if (should(el)) { el.classList.add('tapped'); setTimeout(()=>el.classList.remove('tapped'), 140); }
+  }, {passive:true});
+  document.addEventListener('click', function(e){
+    const el = e.target.closest('button');
+    if (should(el)) { el.classList.add('tapped'); setTimeout(()=>el.classList.remove('tapped'), 120); }
+  });
+})();
 
 </script>
 </body>
