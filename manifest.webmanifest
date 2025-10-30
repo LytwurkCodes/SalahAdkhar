@@ -1,8 +1,8 @@
 
 {
-  "name": "Post‑Ṣalāh Adhkār (Hanafi)",
+  "name": "Post-Ṣalāh Adhkār (Hanafi)",
   "short_name": "Adhkar",
-  "description": "Offline checklist of post‑ṣalāh adhkār (Hanafi) with Arabic and transliteration, tap-to-count, and local save.",
+  "description": "Offline checklist of post-ṣalāh adhkār (Hanafi) with Arabic and transliteration, tap-to-count, and local save.",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0a0a0a",
