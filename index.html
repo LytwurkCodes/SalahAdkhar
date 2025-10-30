@@ -51,7 +51,7 @@
     .btn.haptic-tap { transition: transform 90ms ease, background-color 90ms ease; }
     .btn.haptic-tap.tapped { transform: scale(0.96); outline: 2px solid rgba(79,140,255,0.25); }
     .btn.small { padding: 6px 8px; font-size: 12px; }
-    .btn.counter { padding: 10px 14px; font-size: 18px; min-width: 48px; min-height: 44px; }
+    .btn.counter-btn { padding: 10px 14px; font-size: 18px; min-width: 48px; min-height: 44px; }
     .counter { min-width: 56px; text-align: center; font-variant-numeric: tabular-nums; font-size: 20px; }
     .counter { min-width: 44px; text-align: center; font-variant-numeric: tabular-nums; font-size: 18px; }
     .chip { border: 1px solid var(--border); border-radius: 999px; padding: 4px 8px; }
@@ -197,14 +197,25 @@
 
       const grid = row.querySelector(".grid");
       function draw(n) {
-        grid.innerHTML = "";
-        for (let i=0;i<total;i++) {
-          const on = i < n;
-          const b = mkEl("button", { class: "btn small", onClick: () => toggle(i) }, on ? "✓" : `${i+1}×`);
-          if (on) b.style.background = "linear-gradient(0deg,#1f4,#1f4)";
-          grid.appendChild(b);
-        }
-      }
+  grid.innerHTML = "";
+  // Dynamic layout:
+  if (total === 1) {
+    grid.className = "";
+    grid.style.width = "auto";
+    grid.style.display = "inline-flex";
+  } else {
+    grid.className = "grid three";
+    const w = Math.min(total * 58, 180);
+    grid.style.width = w + "px";
+    grid.style.display = "";
+  }
+  for (let i = 0; i < total; i++) {
+    const on = i < n;
+    const b = mkEl("button", { class: "btn small", onClick: () => toggle(i) }, on ? "✓" : `${i+1}×`);
+    if (on) b.style.background = "linear-gradient(0deg,#1f4,#1f4)";
+    grid.appendChild(b);
+  }
+}
       function set(n) {
         state[salah] = state[salah] || {};
         state[salah][item.key] = n; save(); draw(n);
@@ -230,9 +241,9 @@
             mkEl("div", { class: "muted" }, `Target: ${target}`),
           ),
           mkEl("div", { class: "row" },
-            mkEl("button", { class: "btn counter", onClick: () => dec() }, "−"),
+            mkEl("button", { class: "btn counter-btn", onClick: () => dec() }, "−"),
             mkEl("div", { class: "counter" }, saved.toString() ),
-            mkEl("button", { class: "btn counter", onClick: () => inc() }, "+")
+            mkEl("button", { class: "btn counter-btn", onClick: () => inc() }, "+")
           )
         ),
         mkEl("div", { class: "row", style: "margin-top:8px" },
