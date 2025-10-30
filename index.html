@@ -43,12 +43,16 @@
     .content[aria-hidden="false"] { display: block; }
     .card { border: 1px solid var(--border); background: var(--card); border-radius: 14px; padding: 14px; margin: 10px 0; }
     .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-    .title { font-weight: 600; }
-    .arabic { font-family: "Noto Naskh Arabic", "Amiri", "Scheherazade New", serif; font-size: 20px; }
+    .title { font-weight: 600; line-height: 1.35; word-wrap: break-word; overflow-wrap: anywhere; }
+    .arabic { font-family: "Noto Naskh Arabic", "Amiri", "Scheherazade New", serif; font-size: 20px; display:block; margin-top:6px; line-height:1.7; }
     .muted { color: var(--muted); font-size: 12px; }
     .btn { border: 1px solid var(--border); background: #1b1c20; color: var(--text); border-radius: 10px; padding: 8px 10px; font-weight: 600; }
     .btn:active { transform: scale(0.98); }
+    .btn.haptic-tap { transition: transform 90ms ease, background-color 90ms ease; }
+    .btn.haptic-tap.tapped { transform: scale(0.96); outline: 2px solid rgba(79,140,255,0.25); }
     .btn.small { padding: 6px 8px; font-size: 12px; }
+    .btn.counter { padding: 10px 14px; font-size: 18px; min-width: 48px; min-height: 44px; }
+    .counter { min-width: 56px; text-align: center; font-variant-numeric: tabular-nums; font-size: 20px; }
     .counter { min-width: 44px; text-align: center; font-variant-numeric: tabular-nums; font-size: 18px; }
     .chip { border: 1px solid var(--border); border-radius: 999px; padding: 4px 8px; }
     .good { color: var(--good); }
@@ -62,6 +66,13 @@
     @media (max-width: 520px) {
       .tabs { grid-template-columns: repeat(5, 1fr); }
     }
+  
+/* Prevent overlap between text and controls in rows */
+.row > :first-child { flex: 1 1 auto; min-width: 0; }
+.row > :last-child { flex: 0 0 auto; }
+.arabic { display:block; margin-top:10px; line-height:1.9; word-break: normal; overflow-wrap: anywhere; }
+.title { display:block; }
+
   </style>
 </head>
 <body>
@@ -107,9 +118,10 @@
       { key: "subhan", label: "Subḥānallāh (33)", ar: "سُبْحَانَ اللَّهِ", type: "count", target: 33 },
       { key: "alhamd", label: "Alḥamdulillāh (33)", ar: "الْحَمْدُ لِلَّهِ", type: "count", target: 33 },
       { key: "akbar", label: "Allāhu Akbar (34)", ar: "اللَّهُ أَكْبَرُ", type: "count", target: 34 },
-      { key: "tahleel100", label: "Complete 100: Lā ilāha illa-llāhu waḥdahu lā sharīka lah, lahu-l-mulku wa lahu-l-ḥamdu wa huwa ʿalā kulli shay’in qadīr.", ar: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ.", type: "ticks", times: 1 },
+      
     ];
     const BENEFICIAL = [
+      { key: "tahleel100", label: "Complete 100: Lā ilāha illa-llāhu waḥdahu lā sharīka lah, lahu-l-mulku wa lahu-l-ḥamdu wa huwa ʿalā kulli shay’in qadīr.", ar: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ.", type: "count", target: 1 },
       { key: "salawat", label: "Allāhumma ṣalli ʿalā Muḥammad, wa ʿalā āli Muḥammad.", ar: "اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ، وَعَلَىٰ آلِ مُحَمَّدٍ.", type: "ticks", times: 1 },
       { key: "lahawla", label: "Lā ḥawla wa lā quwwata illā billāh.", ar: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ.", type: "ticks", times: 1 },
       { key: "general", label: "Subḥānallāh / Alḥamdulillāh / Allāhu Akbar / Lā ilāha illa-llāh.", ar: "سُبْحَانَ اللَّهِ / الْحَمْدُ لِلَّهِ / اللَّهُ أَكْبَرُ / لَا إِلَهَ إِلَّا اللَّهُ", type: "ticks", times: 1 },
@@ -218,9 +230,9 @@
             mkEl("div", { class: "muted" }, `Target: ${target}`),
           ),
           mkEl("div", { class: "row" },
-            mkEl("button", { class: "btn small", onClick: () => dec() }, "−"),
+            mkEl("button", { class: "btn counter", onClick: () => dec() }, "−"),
             mkEl("div", { class: "counter" }, saved.toString() ),
-            mkEl("button", { class: "btn small", onClick: () => inc() }, "+")
+            mkEl("button", { class: "btn counter", onClick: () => inc() }, "+")
           )
         ),
         mkEl("div", { class: "row", style: "margin-top:8px" },
@@ -276,7 +288,7 @@
       }
 
       panel.appendChild(sectionTitle("Beneficial add-ons (B)"));
-      BENEFICIAL.forEach(i => panel.appendChild(ticksRow(key, i)));
+      BENEFICIAL.forEach(i => { if (i.type === 'count') panel.appendChild(countRow(key, i)); else panel.appendChild(ticksRow(key, i)); });
     }
 
     ["fajr","dhuhr","asr","maghrib","isha"].forEach(buildPanel);
@@ -319,6 +331,18 @@
         navigator.serviceWorker.register('./service-worker.js').catch(console.error);
       });
     }
-  </script>
+  
+// --- Haptic-like tap feedback (visual; vibrate where allowed) ---
+function tapFeedback(el) {
+  // Visual micro-tap
+  el.classList.add('tapped');
+  setTimeout(() => el.classList.remove('tapped'), 110);
+  // Optional vibration where supported (Android); iOS ignores gracefully
+  if (navigator.vibrate) {
+    try { navigator.vibrate(10); } catch (e) {}
+  }
+}
+
+</script>
 </body>
 </html>
