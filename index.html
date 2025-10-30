@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-  <title>Post-Ṣalāh Adhkār (Hanafi)</title>
-  <meta name="description" content="Phone-friendly offline checklist of post-ṣalāh adhkār (Hanafi) with Arabic and transliteration, tap-to-count, and local save.">
+  <title>Post-Ṣalāh Adhkār</title>
+  <meta name="description" content="Phone-friendly checklist of post-ṣalāh adhkār with Arabic and transliteration, tap-to-count, and local save.">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#0a0a0a">
   <!-- iOS PWA meta -->
@@ -106,7 +106,6 @@
 
     <footer>
       <div class="muted">Counts are saved on your device • Works offline</div>
-      <div class="muted">Tip: iOS → Share → <strong>Add to Home Screen</strong></div>
     </footer>
   </div>
 
@@ -136,7 +135,7 @@
         { key: "tamamat", label: "Aʿūdhu bi kalimāti-llāhi-t-tāmmāti min sharri mā khalaq.", ar: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.", type: "ticks", times: 1 },
         { key: "ilmRizq", label: "Allāhumma innī as’aluka ʿilman nāfiʿan, wa rizqan ṭayyiban, wa ʿamalan mutaqabbalan.", ar: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا.", type: "ticks", times: 1 },
         { key: "ajirni7", label: "Allāhumma ajirnī mina-n-nār ×7", ar: "اللَّهُمَّ أَجِرْنِي مِنَ النَّارِ.", type: "ticks", times: 7 },
-        { key: "subhan100", label: "Subḥānallāhi wa bi ḥamdih ×100 (across morning)", ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.", type: "count", target: 100 },
+        { key: "subhan100", label: "Subḥānallāhi wa bi ḥamdih ×100 (throughout morning)", ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.", type: "count", target: 100 },
       ],
       dhuhr: [],
       asr: [
@@ -146,7 +145,7 @@
       ],
       maghrib: [
         { key: "tahleel10M", label: "Lā ilāha illa-llāhu waḥdahu lā sharīka lah, lahu-l-mulku wa lahu-l-ḥamdu wa huwa ʿalā kulli shay’in qadīr. ×10", ar: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ.", type: "ticks", times: 10 },
-        { key: "waqiah", label: "Sūrat al-Wāqiʿah (virtuous practice)", ar: "سُورَةُ الْوَاقِعَةِ", type: "ticks", times: 1 },
+        { key: "waqiah", label: "Sūrat al-Wāqiʿah", ar: "سُورَةُ الْوَاقِعَةِ", type: "ticks", times: 1 },
       ],
       isha: [
         { key: "akhirBaqarah", label: "Ākhir al-Baqarah (2:285–286)", ar: "آمَنَ الرَّسُولُ … إِلَىٰ آخِرِ السُّورَةِ", type: "ticks", times: 1 },
@@ -283,7 +282,7 @@
     function buildPanel(key) {
       const panel = document.getElementById("panel-" + key);
       panel.innerHTML = "";
-      panel.appendChild(sectionTitle("Highly recommended (A)", "Do these first"));
+      panel.appendChild(sectionTitle("Highly recommended", "Do these first"));
       const aItems = BASE_A.map(i => (i.key === "quls" ? { ...i, times: (key in QULS_TIMES? QULS_TIMES[key] : QULS_TIMES.default) } : i));
       aItems.forEach(i => panel.appendChild(ticksRow(key, i)));
 
@@ -294,14 +293,14 @@
       });
 
       if (EXTRAS[key] && EXTRAS[key].length) {
-        panel.appendChild(sectionTitle("Time-specific extras", "Beneficial (fadā’il)"));
+        panel.appendChild(sectionTitle("Salah specific extras", "Beneficial (fadā’il)"));
         EXTRAS[key].forEach(i => {
           if (i.type === "count") panel.appendChild(countRow(key, i));
           else panel.appendChild(ticksRow(key, i));
         });
       }
 
-      panel.appendChild(sectionTitle("Beneficial add-ons (B)"));
+      panel.appendChild(sectionTitle("Beneficial add-ons"));
       BENEFICIAL.forEach(i => { if (i.type === 'count') panel.appendChild(countRow(key, i)); else panel.appendChild(ticksRow(key, i)); });
     }
 
