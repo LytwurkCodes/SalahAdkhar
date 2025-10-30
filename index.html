@@ -98,46 +98,46 @@
   <script>
     // --- Data model ---
     const BASE_A = [
-      { key: "astaghfirullah", label: "Astaghfirullāh", ar: "أستغفرُ اللهَ", type: "ticks", times: 3 },
-      { key: "tasleem", label: "Allāhumma anta as-salām wa minka as-salām, tabārakta yā dha-l-jalāli wa-l-ikrām.", ar: "اللهم أنت السلام ومنك السلام، تباركتَ يا ذا الجلال والإكرام.", type: "ticks", times: 1 },
-      { key: "kursi", label: "Āyat al-Kursī", ar: "آية الكرسي", type: "ticks", times: 1 },
-      { key: "quls", label: "Three Quls — al-Ikhlāṣ • al-Falaq • an-Nās", ar: "الإخلاص • الفلق • الناس", type: "ticks", times: 1 },
+      { key: "astaghfirullah", label: "Astaghfirullāh", ar: "أَسْتَغْفِرُ اللَّهَ", type: "ticks", times: 3 },
+      { key: "tasleem", label: "Allāhumma anta as-salām wa minka as-salām, tabārakta yā dha-l-jalāli wa-l-ikrām.", ar: "اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ.", type: "ticks", times: 1 },
+      { key: "kursi", label: "Āyat al-Kursī", ar: "آيَةُ الْكُرْسِيِّ", type: "ticks", times: 1 },
+      { key: "quls", label: "Three Quls — al-Ikhlāṣ • al-Falaq • an-Nās", ar: "الإِخْلَاصُ • الْفَلَقُ • النَّاسُ", type: "ticks", times: 1 },
     ];
     const TASBIH = [
-      { key: "subhan", label: "Subḥānallāh (33)", ar: "سُبحانَ الله", type: "count", target: 33 },
-      { key: "alhamd", label: "Alḥamdulillāh (33)", ar: "الحمدُ لله", type: "count", target: 33 },
-      { key: "akbar", label: "Allāhu Akbar (34)", ar: "اللهُ أكبر", type: "count", target: 34 },
-      { key: "tahleel100", label: "Complete 100: Lā ilāha illa-llāhu waḥdahu lā sharīka lah, lahu-l-mulku wa lahu-l-ḥamdu wa huwa ʿalā kulli shay’in qadīr.", ar: "لا إلهَ إلا اللهُ وحدَه لا شريكَ له، لهُ الملكُ ولهُ الحمدُ وهو على كلِّ شيءٍ قدير.", type: "ticks", times: 1 },
+      { key: "subhan", label: "Subḥānallāh (33)", ar: "سُبْحَانَ اللَّهِ", type: "count", target: 33 },
+      { key: "alhamd", label: "Alḥamdulillāh (33)", ar: "الْحَمْدُ لِلَّهِ", type: "count", target: 33 },
+      { key: "akbar", label: "Allāhu Akbar (34)", ar: "اللَّهُ أَكْبَرُ", type: "count", target: 34 },
+      { key: "tahleel100", label: "Complete 100: Lā ilāha illa-llāhu waḥdahu lā sharīka lah, lahu-l-mulku wa lahu-l-ḥamdu wa huwa ʿalā kulli shay’in qadīr.", ar: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ.", type: "ticks", times: 1 },
     ];
     const BENEFICIAL = [
-      { key: "salawat", label: "Allāhumma ṣalli ʿalā Muḥammad, wa ʿalā āli Muḥammad.", ar: "اللهم صلِّ على محمد، وعلى آلِ محمد.", type: "ticks", times: 1 },
-      { key: "lahawla", label: "Lā ḥawla wa lā quwwata illā billāh.", ar: "لا حولَ ولا قوةَ إلا بالله.", type: "ticks", times: 1 },
-      { key: "general", label: "Subḥānallāh / Alḥamdulillāh / Allāhu Akbar / Lā ilāha illa-llāh.", ar: "سُبحانَ الله / الحمدُ لله / اللهُ أكبر / لا إلهَ إلا الله", type: "ticks", times: 1 },
+      { key: "salawat", label: "Allāhumma ṣalli ʿalā Muḥammad, wa ʿalā āli Muḥammad.", ar: "اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ، وَعَلَىٰ آلِ مُحَمَّدٍ.", type: "ticks", times: 1 },
+      { key: "lahawla", label: "Lā ḥawla wa lā quwwata illā billāh.", ar: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ.", type: "ticks", times: 1 },
+      { key: "general", label: "Subḥānallāh / Alḥamdulillāh / Allāhu Akbar / Lā ilāha illa-llāh.", ar: "سُبْحَانَ اللَّهِ / الْحَمْدُ لِلَّهِ / اللَّهُ أَكْبَرُ / لَا إِلَهَ إِلَّا اللَّهُ", type: "ticks", times: 1 },
     ];
     const EXTRAS = {
       fajr: [
-        { key: "quls3", label: "Three Quls ×3", ar: "الإخلاص، الفلق، الناس ثلاث مرات", type: "ticks", times: 3 },
-        { key: "tahleel10", label: "Lā ilāha illa-llāhu waḥdahu lā sharīka lah… ×10", ar: "لا إلهَ إلا اللهُ وحدَه لا شريكَ له، لهُ الملكُ ولهُ الحمدُ وهو على كلِّ شيءٍ قدير.", type: "ticks", times: 10 },
-        { key: "tamamat", label: "Aʿūdhu bi kalimāti-llāhi-t-tāmmāti min sharri mā khalaq.", ar: "أعوذُ بكلماتِ اللهِ التامَّاتِ من شرِّ ما خلق.", type: "ticks", times: 1 },
-        { key: "ilmRizq", label: "Allāhumma innī as’aluka ʿilman nāfiʿan, wa rizqan ṭayyiban, wa ʿamalan mutaqabbalan.", ar: "اللهم إني أسألك علمًا نافعًا، ورزقًا طيبًا، وعملاً متقبَّلًا.", type: "ticks", times: 1 },
-        { key: "ajirni7", label: "Allāhumma ajirnī mina-n-nār ×7", ar: "اللهم أجرني من النار.", type: "ticks", times: 7 },
-        { key: "subhan100", label: "Subḥānallāhi wa bi ḥamdih ×100 (across morning)", ar: "سُبحانَ اللهِ وبحمدِه.", type: "count", target: 100 },
+        { key: "quls3", label: "Three Quls ×3", ar: "الإِخْلَاصُ، الْفَلَقُ، النَّاسُ ثَلَاثَ مَرَّاتٍ", type: "ticks", times: 3 },
+        { key: "tahleel10", label: "Lā ilāha illa-llāhu waḥdahu lā sharīka lah… ×10", ar: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ.", type: "ticks", times: 10 },
+        { key: "tamamat", label: "Aʿūdhu bi kalimāti-llāhi-t-tāmmāti min sharri mā khalaq.", ar: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.", type: "ticks", times: 1 },
+        { key: "ilmRizq", label: "Allāhumma innī as’aluka ʿilman nāfiʿan, wa rizqan ṭayyiban, wa ʿamalan mutaqabbalan.", ar: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا.", type: "ticks", times: 1 },
+        { key: "ajirni7", label: "Allāhumma ajirnī mina-n-nār ×7", ar: "اللَّهُمَّ أَجِرْنِي مِنَ النَّارِ.", type: "ticks", times: 7 },
+        { key: "subhan100", label: "Subḥānallāhi wa bi ḥamdih ×100 (across morning)", ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.", type: "count", target: 100 },
       ],
       dhuhr: [],
       asr: [
-        { key: "tamamatE", label: "Aʿūdhu bi kalimāti-llāhi-t-tāmmāti min sharri mā khalaq.", ar: "أعوذُ بكلماتِ اللهِ التامَّاتِ من شرِّ ما خلق.", type: "ticks", times: 1 },
-        { key: "ajirni7E", label: "Allāhumma ajirnī mina-n-nār ×7", ar: "اللهم أجرني من النار.", type: "ticks", times: 7 },
+        { key: "tamamatE", label: "Aʿūdhu bi kalimāti-llāhi-t-tāmmāti min sharri mā khalaq.", ar: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.", type: "ticks", times: 1 },
+        { key: "ajirni7E", label: "Allāhumma ajirnī mina-n-nār ×7", ar: "اللَّهُمَّ أَجِرْنِي مِنَ النَّارِ.", type: "ticks", times: 7 },
         { key: "tasdiq", label: "Āmannā billāhi waḥdah.", ar: "آمَنَّا بِاللَّهِ وَحْدَهُ.", type: "ticks", times: 1 },
       ],
       maghrib: [
-        { key: "quls3M", label: "Three Quls ×3", ar: "الإخلاص، الفلق، الناس ثلاث مرات", type: "ticks", times: 3 },
-        { key: "tahleel10M", label: "Lā ilāha illa-llāhu waḥdahu lā sharīka lah… ×10", ar: "لا إلهَ إلا اللهُ وحدَه لا شريكَ له، لهُ الملكُ ولهُ الحمدُ وهو على كلِّ شيءٍ قدير.", type: "ticks", times: 10 },
-        { key: "waqiah", label: "Sūrat al-Wāqiʿah (virtuous practice)", ar: "سورة الواقعة", type: "ticks", times: 1 },
+        { key: "quls3M", label: "Three Quls ×3", ar: "الإِخْلَاصُ، الْفَلَقُ، النَّاسُ ثَلَاثَ مَرَّاتٍ", type: "ticks", times: 3 },
+        { key: "tahleel10M", label: "Lā ilāha illa-llāhu waḥdahu lā sharīka lah… ×10", ar: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ.", type: "ticks", times: 10 },
+        { key: "waqiah", label: "Sūrat al-Wāqiʿah (virtuous practice)", ar: "سُورَةُ الْوَاقِعَةِ", type: "ticks", times: 1 },
       ],
       isha: [
-        { key: "akhirBaqarah", label: "Ākhir al-Baqarah (2:285–286)", ar: "آمَنَ الرَّسُولُ … إلى آخر السورة", type: "ticks", times: 1 },
-        { key: "kursiSleep", label: "Āyat al-Kursī (before sleep)", ar: "آية الكرسي", type: "ticks", times: 1 },
-        { key: "mulk", label: "Sūrat al-Mulk", ar: "سورة الملك", type: "ticks", times: 1 },
+        { key: "akhirBaqarah", label: "Ākhir al-Baqarah (2:285–286)", ar: "آمَنَ الرَّسُولُ … إِلَىٰ آخِرِ السُّورَةِ", type: "ticks", times: 1 },
+        { key: "kursiSleep", label: "Āyat al-Kursī (before sleep)", ar: "آيَةُ الْكُرْسِيِّ", type: "ticks", times: 1 },
+        { key: "mulk", label: "Sūrat al-Mulk", ar: "سُورَةُ الْمُلْكِ", type: "ticks", times: 1 },
       ]
     };
 
