@@ -8,7 +8,7 @@ A minimal Progressive Web App (PWA) that runs offline and saves your tap-to-coun
 
 How to install on iPhone
 ----------------------------------
-1) Open the site in Safari.
+1) Open the site (https://lytwurkcodes.github.io/SalahAdkhar) in Safari.
 2) Tap the **Share** icon.
 3) Choose **Add to Home Screen** → **Add**.
 4) Launch from the Home Screen icon. It will open full-screen and work offline. Counts are saved on-device.
@@ -16,21 +16,18 @@ How to install on iPhone
 How to install on Android
 ----------------------------------
 Chrome (most common)
-1) Open site in Chrome.
+1) Open the site (https://lytwurkcodes.github.io/SalahAdkhar) in Chrome.
 2) If you see an Install chip in the address bar, tap it → Install.
     – If not, tap ⋮ (top-right menu) → Install app (or Add to Home screen).
 3) Open it from your app drawer/Home Screen. It’ll run full-screen and work offline.
 
 Samsung Internet
-1) Open the site in Samsung Internet.
+1) Open the site (https://lytwurkcodes.github.io/SalahAdkhar) in Samsung Internet.
 2) Tap ☰ → Add page to → Apps screen (or Home screen).
 
 Microsoft Edge (Android)
-1) Open the site in Edge.
+1) Open the site (https://lytwurkcodes.github.io/SalahAdkhar) in Edge.
 2) Tap ⋯ → Add to phone (or Install app).
-
-Firefox (Android)
-Firefox doesn’t fully support PWA install banners yet, but:
 
 Tips & troubleshooting
 ----------------------------------
