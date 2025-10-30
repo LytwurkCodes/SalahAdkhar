@@ -77,6 +77,20 @@
   .btn, button { -webkit-tap-highlight-color: rgba(255,255,255,0.1); touch-action: manipulation; }
   @keyframes tapPulse { 0%{transform:scale(1)} 50%{transform:scale(0.97)} 100%{transform:scale(1)} }
   .btn.haptic-tap.tapped { animation: tapPulse 120ms ease; }
+
+/* ——— Info modal & button ——— */
+.title-wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.info-btn{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border:1px solid var(--border);border-radius:999px;background:#1b1c20;color:var(--text);font-weight:700;line-height:1;cursor:pointer}
+.info-btn:active{transform:scale(.96)}
+.info-btn span{font-size:12px;position:relative;top:-1px}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999}
+.modal-sheet{position:fixed;left:50%;top:6vh;transform:translateX(-50%);width:min(720px,92vw);max-height:calc(88vh - env(safe-area-inset-bottom));background:var(--card);border:1px solid var(--border);border-radius:14px;z-index:1000;display:flex;flex-direction:column;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border)}
+.modal-title{font-weight:700}
+.modal-close{border:1px solid var(--border);background:#1b1c20;border-radius:10px;padding:6px 10px;font-weight:600}
+.modal-body{padding:14px;overflow:auto}
+.modal-body .arabic{font-size:22px;line-height:2; margin-top:0}    
 </style>
 </head>
 <body>
@@ -114,7 +128,25 @@
     const BASE_A = [
       { key: "astaghfirullah", label: "Astaghfirullāh", ar: "أَسْتَغْفِرُ اللَّهَ", type: "ticks", times: 3 },
       { key: "tasleem", label: "Allāhumma anta as-salām wa minka as-salām, tabārakta yā dha-l-jalāli wa-l-ikrām.", ar: "اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ.", type: "ticks", times: 1 },
-      { key: "kursi", label: "Āyat al-Kursī", ar: "آيَةُ الْكُرْسِيِّ", type: "ticks", times: 1 },
+      { 
+        key: "kursi",
+        label: "Āyat al-Kursī",
+        ar: "آيَةُ الْكُرْسِيِّ",
+        type: "ticks",
+        times: 1,
+        info: {
+          title: "Āyat al-Kursī (2:255)",
+          content: `
+            <div class="arabic">
+              اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ
+              لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ
+              إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلَا يُحِيطُونَ
+              بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ
+              وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ
+            </div>
+          `
+        }
+      },
       { key: "quls", label: "Three Quls - al-Ikhlāṣ • al-Falaq • an-Nās", ar: "الإِخْلَاصُ • الْفَلَقُ • النَّاسُ", type: "ticks", times: 1 },
     ];
     const TASBIH = [
@@ -145,12 +177,40 @@
       ],
       maghrib: [
         { key: "tahleel10M", label: "Lā ilāha illa-llāhu waḥdahu lā sharīka lah, lahu-l-mulku wa lahu-l-ḥamdu wa huwa ʿalā kulli shay’in qadīr. ×10", ar: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ.", type: "ticks", times: 10 },
-        { key: "waqiah", label: "Sūrat al-Wāqiʿah", ar: "سُورَةُ الْوَاقِعَةِ", type: "ticks", times: 1 },
+        { 
+          key: "waqiah",
+          label: "Sūrat al-Wāqiʿah",
+          ar: "سُورَةُ الْوَاقِعَةِ",
+          type: "ticks",
+          times: 1,
+          info: {
+            title: "Sūrat al-Wāqiʿah (56)",
+            content: `
+              <div class="arabic">
+                <!-- Paste full Arabic of Sūrat al-Wāqiʿah here if you want the whole sūrah -->
+              </div>
+            `
+          }
+        },
       ],
       isha: [
         { key: "akhirBaqarah", label: "Ākhir al-Baqarah (2:285–286)", ar: "آمَنَ الرَّسُولُ … إِلَىٰ آخِرِ السُّورَةِ", type: "ticks", times: 1 },
         { key: "kursiSleep", label: "Āyat al-Kursī (before sleep)", ar: "آيَةُ الْكُرْسِيِّ", type: "ticks", times: 1 },
-        { key: "mulk", label: "Sūrat al-Mulk", ar: "سُورَةُ الْمُلْكِ", type: "ticks", times: 1 },
+        { 
+          key: "mulk",
+          label: "Sūrat al-Mulk",
+          ar: "سُورَةُ الْمُلْكِ",
+          type: "ticks",
+          times: 1,
+          info: {
+            title: "Sūrat al-Mulk (67)",
+            content: `
+              <div class="arabic">
+                <!-- Paste full Arabic of Sūrat al-Mulk here if you want the whole sūrah -->
+              </div>
+            `
+          }
+        },
       ]
     };
 
@@ -182,20 +242,40 @@
     function ticksRow(salah, item) {
       const saved = (state[salah]?.[item.key] ?? 0);
       const total = item.times;
+      // Build the left-hand column (title + optional info button + Arabic + target)
+      const leftCol = mkEl("div", {},
+  // Title + (optional) info button
+  (()=>{
+      const wrap = mkEl("div", { class: "title-wrap" },
+          mkEl("div", { class: "title" }, item.label)
+        );
+        if (item.info && item.info.title && item.info.content) {
+          const ib = mkEl("button", {
+            class: "info-btn",
+            onClick: () => openInfoModal(item.info.title, item.info.content)
+          }, mkEl("span", {}, "i"));
+          wrap.appendChild(ib);
+        }
+        return wrap;
+      })(),
+      // Arabic line (if present)
+      item.ar ? mkEl("div", { class: "arabic" }, item.ar) : null,
+      // Target line
+      mkEl("div", { class: "muted" }, `Target: ${total}`)
+    );
+
+// Now build the full row, using leftCol on the left and keeping the grid on the right
       const row = mkEl("div", { class: "card" },
         mkEl("div", { class: "row" },
-          mkEl("div", {},
-            mkEl("div", { class: "title" }, item.label),
-            mkEl("div", { class: "arabic" }, item.ar),
-            mkEl("div", { class: "muted" }, `Target: ${total}`),
-          ),
-          mkEl("div", { class: "grid three", style: "width: 180px;" })
+          leftCol,
+          mkEl("div", { class: "grid three", style: "width: 180px;" }) // your tick buttons will render here in draw()
         ),
         mkEl("div", { class: "row", style: "margin-top:8px" },
           mkEl("button", { class: "btn small", onClick: () => set(0) }, "Reset"),
           mkEl("div", { class: "good" }, (saved >= total) ? "✓ Done" : "")
         )
       );
+
 
       const grid = row.querySelector(".grid");
       function draw(n) {
@@ -370,6 +450,33 @@ function tapFeedback(el) {
   });
 })();
 
+// ——— Modal helpers ———
+function openInfoModal(title, htmlContent){
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.addEventListener('click', (e)=>{ if(e.target===overlay) close(); });
+
+  const sheet = document.createElement('div');
+  sheet.className = 'modal-sheet';
+  sheet.innerHTML = `
+    <div class="modal-head">
+      <div class="modal-title">${title}</div>
+      <button class="modal-close">Close</button>
+    </div>
+    <div class="modal-body">${htmlContent}</div>
+  `;
+  overlay.appendChild(sheet);
+  document.body.appendChild(overlay);
+
+  function onEsc(ev){ if(ev.key==='Escape') close(); }
+  function close(){
+    document.removeEventListener('keydown', onEsc);
+    overlay.remove();
+  }
+  sheet.querySelector('.modal-close').addEventListener('click', close);
+  document.addEventListener('keydown', onEsc);
+}
+    
 </script>
 </body>
 </html>
